@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: openmrs-rs
+spec:
+  minReadySeconds: 5
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: openmrs
+        version: "1.0"
+    spec:
+      containers:
+        -  name: openmrs-container
+           image: 
+           livenessProbe:
+             httpGet:
+               path: /
+               port: 80
+           ports:
+             -  containerPort: 80
+                protocol: TCP
+                name: http
